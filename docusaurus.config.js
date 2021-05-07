@@ -50,14 +50,6 @@ module.exports = {
               label: "Pace Flow Assurance",
               href: "https://paceflowassurance.co.uk/",
             },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
-            },
           ],
         },
         {
