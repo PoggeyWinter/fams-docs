@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Pipes
+# Pipe
 
 Pipes are connections between nodes.
 
