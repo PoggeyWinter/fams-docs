@@ -10,16 +10,17 @@ A pipe's `in pressure` and `mass flow rate` are determined by its `source node`.
 
 ## Properties
 
-| Property       | Unit | Default      | Notes                   |
-| -------------- | ---- | ------------ | ----------------------- |
-| Name           | -    | pipe         |                         |
-| Length         | m    | 200          |                         |
-| Diameter       | m    | 2            |                         |
-| Mass flow rate | kg/s | 0            |                         |
-| In Pressure    | Pa   | 0            |                         |
-| Out Pressure   | Pa   | 0            |                         |
-| Source         | -    | new `Node()` | Must be a `Node` object |
-| Destination    | -    | new `Node()` | Must be a `Node` object |
+| Property       | Unit                | Default      | Notes                                                                                  |
+| -------------- | ------------------- | ------------ | -------------------------------------------------------------------------------------- |
+| `name`         | -                   | pipe         |                                                                                        |
+| `length`       | m                   | 200          |                                                                                        |
+| `diameter`     | m                   | 2            |                                                                                        |
+| `massFlow`     | kg/s                | 0            |                                                                                        |
+| `pressure.in`  | Pa                  | 0            |                                                                                        |
+| `pressure.out` | Pa                  | 0            |                                                                                        |
+| `source`       | -                   | new `Node()` | Must be a `Node` object                                                                |
+| `destination`  | -                   | new `Node()` | Must be a `Node` object                                                                |
+| `direction`    | `boolean` \| `null` | `null`       | `true` if `pressure.in` > `pressure.out`<br/>`false` if `pressure.out` > `pressure.in` |
 
 The `Pipe()` constructor accepts an `x` input, which sets the x position of its source node.
 
