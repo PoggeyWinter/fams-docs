@@ -1,0 +1,32 @@
+---
+sidebar_position: 3
+---
+
+# Section
+
+A section is a `Network` of pipes that (approximately uniformly) spans the gap between two nodes, or covers a specified length.
+
+Its resolution specifies the length of the pipes in the series. If the length is not perfectly divisible by the resolution, remainder will be the length of the last pipe.
+
+:::tip Plan
+
+`Sections` will be allowed to be nested within `Networks` to connect nodes with fixed positions.
+
+:::
+
+## Properties
+
+| Property      | Unit | Default                      | Notes                   |
+| ------------- | ---- | ---------------------------- | ----------------------- |
+| `name`        | -    | section                      |                         |
+| `resolution`  | m    | 200                          | Pipe length             |
+| `length`      | m    | 200                          | Overall length          |
+| `source`      | -    | new `Node()`                 | Must be a `Node` object |
+| `destination` | -    | new `Node()`                 | Must be a `Node` object |
+| `nodes`       |      | `[source, ..., destination]` | `<Array>Node`           |
+
+## Methods
+
+### chain
+
+Generates a chain of linked pipes, starting with the source node and ending with the destination node. Called during initialisation.
