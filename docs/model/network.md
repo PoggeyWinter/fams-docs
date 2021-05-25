@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Network
 
-A network is a series of pipes.
+A network is a series of [pipes](/docs/model/Pipe).
 
 ## Properties
 

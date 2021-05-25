@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Pipe
 
-Pipes are connections between nodes.
+Pipes are connections between [nodes](/docs/model/Node).
 
 A pipe's `in pressure` and `mass flow rate` are determined by its `source node`.
 

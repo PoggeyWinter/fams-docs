@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Section
 
-A section is a `Network` of pipes that (approximately uniformly) spans the gap between two nodes, or covers a specified length.
+A section is a [network](/docs/model/Network) of [pipes](/docs/model/Pipe) that (approximately uniformly) spans the gap between two [nodes](/docs/model/Node), or covers a specified length.
 
 Its resolution specifies the length of the pipes in the series. If the length is not perfectly divisible by the resolution, remainder will be the length of the last pipe.
 
