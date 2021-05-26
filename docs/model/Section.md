@@ -16,13 +16,14 @@ Its resolution specifies the length of the pipes in the series. If the length is
 
 ## Properties
 
-| Property      | Unit | Default      | Notes                   |
-| ------------- | ---- | ------------ | ----------------------- |
-| `name`        | -    | section      |                         |
-| `resolution`  | m    | 200          | Pipe length             |
-| `length`      | m    | 200          | Overall length          |
-| `source`      | -    | new `Node()` | Must be a `Node` object |
-| `destination` | -    | new `Node()` | Must be a `Node` object |
+| Property      | Unit | Default      | Notes                                                     |
+| ------------- | ---- | ------------ | --------------------------------------------------------- |
+| `name`        | -    | section      |                                                           |
+| `resolution`  | m    | 200          | Pipe length                                               |
+| `length`      | m    | 200          | Overall length                                            |
+| `source`      | -    | new `Node()` | Must be a `Node` object                                   |
+| `destination` | -    | new `Node()` | Must be a `Node` object                                   |
+| `cosine`      | -    | 1            | Calculated based on source and destination node positions |
 
 ### Constructor parameters
 
