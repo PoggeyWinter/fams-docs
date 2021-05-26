@@ -24,7 +24,24 @@ A pipe's `in pressure` and `mass flow rate` are determined by its `source node`.
 
 The `Pipe()` constructor accepts an `x` input, which sets the x position of its source node.
 
-## Pressure drop
+### Constructor parameters
+
+```js
+export interface IPipe {
+  name?: string
+  length?: number
+  diameter?: number
+  massFlow?: number
+  source?: Node
+  destination?: Node
+  x?: number
+  endElevation?: number
+}
+```
+
+## Methods
+
+### pressureDrop()
 
 A pipe's `out pressure` is calculated based on its physical properties and the properties of the fluid. This is used to set the pressure at the destination node.
 
@@ -51,3 +68,18 @@ I imagine the volumetric flow rate shoule be calculated but I need more informat
 Also it isn't clear what the 32000 is or if that'll need to be replaced with another calculated value.
 
 :::
+
+### _set_ source
+
+Updates the private `_source` property to be the received [node](/docs/model/Node) then triggers side effects:
+
+- Updates `pressure.in` to match the new source pressure.
+- Updates `pressure.out` to be `pressure.in - this.pressureDrop()`
+
+### _set_ destination
+
+Sets pressure of the new destination node to the lowest of `pressure.out` and `node.pressure`.
+
+Sets `pressure.out` to the new `node.pressure` value.
+
+Updates the private `_destination` property to be the received [node](/docs/model/Node).
