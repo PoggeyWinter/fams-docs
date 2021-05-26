@@ -14,9 +14,19 @@ A network is a series of [pipes](/docs/model/Pipe).
 | `nodes`  |      | `[]`    | `<Array>Node` |
 | `pipes`  |      | `[]`    | `<Array>Pipe` |
 
+### Constructor parameters
+
+```js
+interface INetwork {
+  name?: string
+  nodes?: Node[]
+  pipes?: Pipe[]
+}
+```
+
 ## Methods
 
-### addNode
+### addNode()
 
 Creates a new `Node` and appends it to `nodes`. Accepts the same inputs as the `Node` constructor.
 
@@ -32,7 +42,7 @@ addNode(props: INode = {}) {
 
 The default name for the created node is based on the name of the network and its position in the list of nodes.
 
-### addPipe
+### addPipe()
 
 Creates a new `Pipe` and appends it to the list of `pipes`. Accepts the same inputs as the `Pipe` constructor.
 
@@ -52,7 +62,7 @@ The default name for the created pipe is based on the name of the network and it
 
 If the network has nodes already, the last node is used as the source of the new pipe.
 
-### validate
+### validate()
 
 Checks that the network's nodes and pipes meet certain conditions.
 
