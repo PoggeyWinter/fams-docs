@@ -56,7 +56,7 @@ If the network has nodes already, the last node is used as the source of the new
 
 Checks that the network's nodes and pipes meet certain conditions.
 
-```js {6-16}
+```js
 validate() {
   if (!this.nodes.length) throw `Network (${this.name}) has no nodes`
 
@@ -70,15 +70,9 @@ validate() {
   const nodesWithConnections = connections.flat()
 
   for (let node of this.nodes) {
-    if (!nodesWithConnections.includes(node))
+  if (!nodesWithConnections.includes(node))
     throw `node (${node.name}) has missing connections`
   }
   return true
 }
 ```
-
-:::note
-
-The missing connections check sometimes behaves unexpectedly. It should be reworked or removed.
-
-:::
