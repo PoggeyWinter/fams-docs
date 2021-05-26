@@ -50,7 +50,8 @@ Creates a new `Pipe` and appends it to the list of `pipes`. Accepts the same inp
 addPipe(props: IPipe = {}) {
   const name = props.name || `${this.name}-P${this.pipes.length}`
   props.name = name
-  if (this.nodes.length) props.source = this.nodes[this.nodes.length - 1]
+  if (!props.source && this.nodes.length)
+    props.source = this.nodes[this.nodes.length - 1]
   const p = new Pipe(props)
   this.pipes.push(p)
   this.nodes.push(p.destination)
@@ -60,7 +61,7 @@ addPipe(props: IPipe = {}) {
 
 The default name for the created pipe is based on the name of the network and its position in the list of pipes.
 
-If the network has nodes already, the last node is used as the source of the new pipe.
+If the network has nodes and a source is not specified, the last node is used as the source of the new pipe.
 
 ### validate()
 
