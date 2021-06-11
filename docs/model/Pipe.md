@@ -74,3 +74,7 @@ Sets pressure of the new destination node to the lowest of `pressure.out` and `n
 Sets `pressure.out` to the new `node.pressure` value.
 
 Updates the private `_destination` property to be the received [node](/docs/model/Node).
+
+### _get_ pressureContinuity()
+
+Returns true if the pipes `pressure.out` matches the pressure at the destination node.
