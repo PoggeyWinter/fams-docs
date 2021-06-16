@@ -21,6 +21,7 @@ A pipe's `in pressure` and `mass flow rate` are determined by its `source node`.
 | `source`       | -                   | new `Node()` | Must be a `Node` object                                                                |
 | `destination`  | -                   | new `Node()` | Must be a `Node` object                                                                |
 | `direction`    | `boolean` \| `null` | `null`       | `true` if `pressure.in` > `pressure.out`<br/>`false` if `pressure.out` > `pressure.in` |
+| `valve`        | `Valve` \| `false`  | `false`      |                                                                                        |
 
 The `Pipe()` constructor accepts an `x` input, which sets the x position of its source node.
 
@@ -59,6 +60,16 @@ destinationPressure(): number {
   return P1 - (32000 * (viscosity * L * Q)) / (A * d ** 2) - z * g * density
 }
 ```
+
+### addValve()
+
+Adds a new [Valve](/docs/model/Valve) to the end of the pipe.
+
+The valve's pressure is determined by the `pressure.out` of the pipe and `pressure` of the destination node.
+
+### removeValve()
+
+Removes the pipe's [Valve](/docs/model/Valve).
 
 ### _set_ source
 
