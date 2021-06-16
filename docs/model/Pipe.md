@@ -44,7 +44,7 @@ export interface IPipe {
 
 ### destinationPressure()
 
-A pipe's `out pressure` is calculated based on its physical properties and the properties of the fluid. This is used to set the pressure at the destination node.
+A pipe's `pressure.out` is calculated based on its physical properties and the properties of the fluid. This is used to set the pressure at the destination node.
 
 ```js
 destinationPressure(): number {
