@@ -10,13 +10,11 @@ Its `pressure.out` must not be higher than its `pressure.in`.
 
 ## Properties
 
-| Property          | Unit | Default | Notes                                          |
-| ----------------- | ---- | ------- | ---------------------------------------------- |
-| `name`            | -    | valve   |                                                |
-| `pressure.in`     | Pa   | 0       | From pipe                                      |
-| `pressure.out`    | Pa   | 0       | From node                                      |
-| `temperature.in`  | K    | 0       | From pipe                                      |
-| `temperature.out` | K    | 0       | Calculated based on contant enthalpy expansion |
+| Property       | Unit | Default             | Notes              |
+| -------------- | ---- | ------------------- | ------------------ |
+| `name`         | -    | valve               |                    |
+| `pressure.in`  | Pa   | Pipe `pressure.out` | Required, non-zero |
+| `pressure.out` | Pa   | Node `pressure`     | Required, non-zero |
 
 ### Constructor parameters
 
