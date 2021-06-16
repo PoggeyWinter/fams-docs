@@ -50,6 +50,10 @@ module.exports = {
               label: "Pace Flow Assurance",
               href: "https://paceflowassurance.co.uk/",
             },
+            {
+              label: "Digital Twin",
+              href: "https://fams.vercel.app/",
+            },
           ],
         },
         {
