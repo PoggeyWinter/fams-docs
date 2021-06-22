@@ -42,7 +42,7 @@ export interface IPipe {
 
 ## Methods
 
-### destinationPressure()
+### `destinationPressure()`
 
 A pipe's `pressure.out` is calculated based on its physical properties and the properties of the fluid. This is used to set the pressure at the destination node.
 
@@ -61,24 +61,24 @@ destinationPressure(): number {
 }
 ```
 
-### addValve()
+### `addValve()`
 
 Adds a new [Valve](/docs/model/Valve) to the end of the pipe.
 
 The valve's pressure is determined by the `pressure.out` of the pipe and `pressure` of the destination node.
 
-### removeValve()
+### `removeValve()`
 
 Removes the pipe's [Valve](/docs/model/Valve).
 
-### _set_ source
+### _set_ `source(n: Node)`
 
 Updates the private `_source` property to be the received [node](/docs/model/Node) then triggers side effects:
 
 - Updates `pressure.in` to match the new source pressure.
 - Updates `pressure.out` to be `pressure.in - this.pressureDrop()`
 
-### _set_ destination
+### _set_ `destination(n: Node)`
 
 Sets pressure of the new destination node to the lowest of `pressure.out` and `node.pressure`.
 
@@ -86,6 +86,6 @@ Sets `pressure.out` to the new `node.pressure` value.
 
 Updates the private `_destination` property to be the received [node](/docs/model/Node).
 
-### _get_ pressureContinuity()
+### _get_ `pressureContinuity`
 
 Returns true if the pipes `pressure.out` matches the pressure at the destination node.

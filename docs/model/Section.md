@@ -39,12 +39,12 @@ interface ISection {
 
 ## Methods
 
-### chain()
+### `chain()`
 
 Generates a network of linked pipes, starting with the source node and ending with the destination node. Called during initialisation.
 
 Returns the generated network.
 
-### _get_ height
+### _get_ `height`
 
 Returns the elevation difference between the destination and source nodes.

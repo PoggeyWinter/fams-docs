@@ -57,6 +57,6 @@ Returns the output temperature.
 
 Looks up enthalpy using the specified `p_in` and `t_in`. Finds the corresponding output temperature using `p_out` and the enthalpy value it finds.
 
-### _get_ `uniquePressures()`
+### _get_ `uniquePressures`
 
 Returns an array of the values in `this.unique.pressure`. Used to search for the pressure value closest to a given input.

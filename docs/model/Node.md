@@ -39,11 +39,11 @@ export interface INode {
 
 ## Methods
 
-### _set_ inflow
+### _set_ `inflow(i: number)`
 
 Updates `flow.in` and `flow.out` (mass conservation).
 
-### _get_ type
+### _get_ `type`
 
 #### Closed
 
@@ -61,7 +61,7 @@ A node whose inflow is greater than its outflow.
 
 A node that has equal (and non-zero) inflow and outflow.
 
-### _get_ density
+### _get_ `density`
 
 ```js
 get density() {
@@ -73,7 +73,7 @@ get density() {
 }
 ```
 
-### _get_ viscosity
+### _get_ `viscosity`
 
 ```js
 get viscosity() {
