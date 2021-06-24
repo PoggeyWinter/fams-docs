@@ -22,6 +22,7 @@ A pipe segment's `in pressure` and `mass flow rate` are determined by its `sourc
 | `destination`  | -                   | new `Node()` | Must be a `Node` object                                                                |
 | `direction`    | `boolean` \| `null` | `null`       | `true` if `pressure.in` > `pressure.out`<br/>`false` if `pressure.out` > `pressure.in` |
 | `valve`        | `Valve` \| `false`  | `false`      |                                                                                        |
+| `roughness`    | -                   | 0            |                                                                                        |
 
 The `PipeSegment()` constructor accepts an `x` input, which sets the x position of its source node.
 
