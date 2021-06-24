@@ -1,91 +1,50 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # Pipe
 
-Pipes are connections between [nodes](/docs/model/Node).
+A section is a [network](/docs/model/Network) of [pipes](/docs/model/Pipe) that (approximately uniformly) spans the gap between two [nodes](/docs/model/Node), or covers a specified length. If a source or destination node is not provided, one will be created.
 
-A pipe's `in pressure` and `mass flow rate` are determined by its `source node`.
+Its resolution specifies the length of the pipes in the series. If the length is not perfectly divisible by the resolution, remainder will be the length of the last pipe.
+
+:::tip Plan
+
+`Pipes` will be allowed to be nested within `Networks` to connect nodes with fixed positions.
+
+:::
 
 ## Properties
 
-| Property       | Unit                | Default      | Notes                                                                                  |
-| -------------- | ------------------- | ------------ | -------------------------------------------------------------------------------------- |
-| `name`         | -                   | pipe         |                                                                                        |
-| `length`       | m                   | 200          |                                                                                        |
-| `diameter`     | m                   | 2            |                                                                                        |
-| `massFlow`     | kg/s                | 1            |                                                                                        |
-| `pressure.in`  | Pa                  | 0            |                                                                                        |
-| `pressure.out` | Pa                  | 0            |                                                                                        |
-| `source`       | -                   | new `Node()` | Must be a `Node` object                                                                |
-| `destination`  | -                   | new `Node()` | Must be a `Node` object                                                                |
-| `direction`    | `boolean` \| `null` | `null`       | `true` if `pressure.in` > `pressure.out`<br/>`false` if `pressure.out` > `pressure.in` |
-| `valve`        | `Valve` \| `false`  | `false`      |                                                                                        |
-
-The `Pipe()` constructor accepts an `x` input, which sets the x position of its source node.
+| Property      | Unit | Default      | Notes                                                     |
+| ------------- | ---- | ------------ | --------------------------------------------------------- |
+| `name`        | -    | pipe         |                                                           |
+| `resolution`  | m    | 200          | Pipe segment length                                       |
+| `length`      | m    | 200          | Overall length                                            |
+| `source`      | -    | new `Node()` | Must be a `Node` object                                   |
+| `destination` | -    | new `Node()` | Must be a `Node` object                                   |
+| `cosine`      | -    | 1            | Calculated based on source and destination node positions |
 
 ### Constructor parameters
 
 ```js
-export interface IPipe {
+interface IPipe {
   name?: string
+  resolution?: number
   length?: number
-  diameter?: number
-  massFlow?: number
   source?: Node
   destination?: Node
-  x?: number
-  endElevation?: number
 }
 ```
 
 ## Methods
 
-### `destinationPressure()`
+### `chain()`
 
-A pipe's `pressure.out` is calculated based on its physical properties and the properties of the fluid. This is used to set the pressure at the destination node.
+Generates a network of linked pipes, starting with the source node and ending with the destination node. Called during initialisation.
 
-```js
-destinationPressure(): number {
-  const P1 = this.pressure.in
-  const viscosity = this.source.viscosity // fluid property
-  const L = this.length
-  const A = 0.25 * Math.PI * this.diameter ** 2
-  const d = this.diameter * 1000 // mm
-  const z = this.destination.elevation - this.source.elevation
-  const g = 9.81
-  const density = this.source.density
-  const Q = this.massFlow / density // volumetric flow rate
-  return P1 - (32000 * (viscosity * L * Q)) / (A * d ** 2) - z * g * density
-}
-```
+Returns the generated network.
 
-### `addValve()`
+### _get_ `height`
 
-Adds a new [Valve](/docs/model/Valve) to the end of the pipe.
-
-The valve's pressure is determined by the `pressure.out` of the pipe and `pressure` of the destination node.
-
-### `removeValve()`
-
-Removes the pipe's [Valve](/docs/model/Valve).
-
-### _set_ `source(n: Node)`
-
-Updates the private `_source` property to be the received [node](/docs/model/Node) then triggers side effects:
-
-- Updates `pressure.in` to match the new source pressure.
-- Updates `pressure.out` to be `pressure.in - this.pressureDrop()`
-
-### _set_ `destination(n: Node)`
-
-Sets pressure of the new destination node to the lowest of `pressure.out` and `node.pressure`.
-
-Sets `pressure.out` to the new `node.pressure` value.
-
-Updates the private `_destination` property to be the received [node](/docs/model/Node).
-
-### _get_ `pressureContinuity`
-
-Returns true if the pipes `pressure.out` matches the pressure at the destination node.
+Returns the elevation difference between the destination and source nodes.
