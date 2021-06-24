@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Network
 
-A network is a series of [pipes](/docs/model/Pipe).
+A network is a collection of [pipes](/docs/model/Pipe) and [nodes](/docs/model/Node).
 
 ## Properties
 
@@ -47,7 +47,7 @@ The default name for the created node is based on the name of the network and it
 Creates a new `Pipe` and appends it to the list of `pipes`. Accepts the same inputs as the `Pipe` constructor.
 
 ```js {2,4}
-addPipe(props: IPipe = {}) {
+addPipe(props: INetworkPipe = {}) {
   const name = props.name || `${this.name}-P${this.pipes.length}`
   props.name = name
   if (!props.source && this.nodes.length)

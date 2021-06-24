@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Pipe
 
-A section is a [network](/docs/model/Network) of [pipes](/docs/model/Pipe) that (approximately uniformly) spans the gap between two [nodes](/docs/model/Node), or covers a specified length. If a source or destination node is not provided, one will be created.
+A pipe is a [network](/docs/model/Network) of [pipe segments](/docs/model/PipeSegment) that (approximately uniformly) spans the gap between two [nodes](/docs/model/Node), or covers a specified length. If a source or destination node is not provided, one will be created.
 
 Its resolution specifies the length of the pipes in the series. If the length is not perfectly divisible by the resolution, remainder will be the length of the last pipe.
 
@@ -41,7 +41,7 @@ interface IPipe {
 
 ### `chain()`
 
-Generates a network of linked pipes, starting with the source node and ending with the destination node. Called during initialisation.
+Generates a network of linked pipe segments, starting with the source node and ending with the destination node. Called during initialisation.
 
 Returns the generated network.
 
