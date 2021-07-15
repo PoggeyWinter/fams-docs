@@ -1,101 +1,135 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Pipe Segment
 
-Pipe segments are connections between [nodes](/docs/model/Node).
+Pipe segments extend the [TreeNode](/docs/model/TreeNode) class. It might make more sense for them extend the [Point](/docs/model/Point) class instead but I didn't think about that and made this class first.
 
-A pipe segment's `in pressure` and `mass flow rate` are determined by its `source node`.
+Their additional properties can be seen below.
 
-## Properties
-
-| Property       | Unit                | Default      | Notes                                                                                  |
-| -------------- | ------------------- | ------------ | -------------------------------------------------------------------------------------- |
-| `name`         | -                   | pipeseg      |                                                                                        |
-| `length`       | m                   | 200          |                                                                                        |
-| `diameter`     | m                   | 2            |                                                                                        |
-| `massFlow`     | kg/s                | 1            |                                                                                        |
-| `pressure.in`  | Pa                  | 0            |                                                                                        |
-| `pressure.out` | Pa                  | 0            |                                                                                        |
-| `source`       | -                   | new `Node()` | Must be a `Node` object                                                                |
-| `destination`  | -                   | new `Node()` | Must be a `Node` object                                                                |
-| `direction`    | `boolean` \| `null` | `null`       | `true` if `pressure.in` > `pressure.out`<br/>`false` if `pressure.out` > `pressure.in` |
-| `valve`        | `Valve` \| `false`  | `false`      |                                                                                        |
-| `roughness`    | -                   | 0            |                                                                                        |
-
-The `PipeSegment()` constructor accepts an `x` input, which sets the x position of its source node.
-
-### Constructor parameters
+## Constructor parameters
 
 ```js
-export interface IPipeSegment {
-  name?: string
-  length?: number
+interface IPipeSeg {
+  name: string
   diameter?: number
-  massFlow?: number
-  source?: Node
-  destination?: Node
-  x?: number
-  endElevation?: number
+  length?: number
+  flowrate?: number
+  roughness?: number
+  start?: {
+    pressure?: number
+    viscosity?: number
+    temperature?: number
+    x?: number
+    y?: number
+  }
 }
 ```
 
 ## Methods
 
-### `destinationPressure()`
+### `inflow()`
 
-A pipe segment's `pressure.out` is calculated based on its physical properties and the properties of the fluid. This is used to set the pressure at the destination node.
+Returns the sum of the flowrates of the preceding nodes.
+
+### `density()`
+
+Returns the density of the fluid at the start of the pipe segment.
 
 ```js
-destinationPressure(): number {
-  const w = this.massFlow
-  const D = this.diameter
-  const A = 0.25 * Math.PI * this.diameter ** 2
-  const ρ = this.source.density
-  const v = 1 / ρ
-  const L = this.length
-  const P1 = this.pressure.in
-
-  // Friction factor
-  const u = w / (A * ρ)
-  const μ = this.source.viscosity
-  const Re = (ρ * u * D) / μ
-  const f = Re < 2000 ? 64 / Re : 0.094 / (D * 1000) ** (1 / 3)
-
-  return (
-    (A * Math.sqrt(D)) ** -1 *
-    Math.sqrt(P1) *
-    Math.sqrt(A ** 2 * D * P1 - f * L * v * w ** 2)
-  )
+density(): number {
+  // ρ=(Pμ)/(RT)
+  const μ = 0.044
+  const R = 8.31462
+  return Number((this.properties.start.pressure * μ) / (R * this.properties.start.temperature))
 }
 ```
 
-### `addValve()`
+### `viscosity()`
 
-Adds a new [Valve](/docs/model/Valve) to the end of the pipe segment.
+Returns the viscosity of the fluid at the start of the pipe segment.
 
-The valve's pressure is determined by the `pressure.out` of the pipe segment and `pressure` of the destination node.
+```js
+viscosity(): number {
+  const μ0 = 0.000018 // Ref viscosity
+  const T0 = 373 // Ref temperature
+  const C = 240 // Southerland constant
+  const T = this.properties.start.temperature
+  return μ0 * ((T0 + C) / (T + C)) * (T / T0) ** (3 / 2)
+}
+```
 
-### `removeValve()`
+### `endPressure()`
 
-Removes the pipe segment's [Valve](/docs/model/Valve).
+Returns the pressure at the end of the pipe segment.
 
-### _set_ `source(n: Node)`
+```js
+endPressure(): number {
+  const w = this.properties.flowrate
+  const D = this.properties.diameter
+  const A = 0.25 * Math.PI * this.properties.diameter ** 2
+  const ρ = this.density()
+  const v = 1 / ρ
+  const L = this.properties.length
+  const P1 = this.properties.start.pressure
 
-Updates the private `_source` property to be the received [node](/docs/model/Node) then triggers side effects:
+  // Friction factor
+  const u = w / (A * ρ)
+  const μ = this.viscosity()
+  const Re = (ρ * u * D) / μ
+  const f = Re < 2000 ? 64 / Re : 0.094 / (D * 1000) ** (1 / 3)
 
-- Updates `pressure.in` to match the new source pressure.
-- Updates `pressure.out` to be `pressure.in - this.pressureDrop()`
+  return (A * Math.sqrt(D)) ** -1 * Math.sqrt(P1) * Math.sqrt(A ** 2 * D * P1 - f * L * v * w ** 2)
+}
+```
 
-### _set_ `destination(n: Node)`
+### `pressureDrop()`
 
-Sets pressure of the new destination node to the lowest of `pressure.out` and `node.pressure`.
+Returns the difference in pressure from the start to the end.
 
-Sets `pressure.out` to the new `node.pressure` value.
+### get `pressure`
 
-Updates the private `_destination` property to be the received [node](/docs/model/Node).
+Returns the result of `this.endPressure()`
 
-### _get_ `pressureContinuity`
+### get `temperature`
 
-Returns true if the pipe segment's `pressure.out` matches the pressure at the destination node.
+:::info
+
+This will eventually have some decrease towards ambient temperature.
+
+:::
+
+Returns the temperature at the start of the pipe segment.
+
+### get `flowrate`
+
+Returns the result of `this.inflow()`
+
+### `pressureContinuity()`
+
+Returns a boolean. True if the destination node has a pressure value equal to `this.pressure`
+
+### `addSource()`
+
+Adds a child node to `this.sources`. Re-evaluates the start pressure of this node.
+
+```js
+addSource(node: TreeNode) {
+  super.addSource(node)
+
+  let lowestPressure = this.properties.start.pressure
+  const selectLowerPressure = (n: PipeSegment) => {
+    if (n !== this) lowestPressure = Math.min(lowestPressure, n.pressure)
+  }
+  postOrder(this, selectLowerPressure)
+
+  this.properties.start.pressure = lowestPressure
+}
+```
+
+:::tip Planned change
+
+This should definitely be made to extend `Point` rather than `TreeNode`
+
+:::

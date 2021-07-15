@@ -4,7 +4,13 @@ sidebar_position: 6
 
 # Equation of State
 
-The equation of state entity is used for thermodynamic calculations.  
+:::danger poorly implemented (maybe?)
+
+This needs work. Maybe flowcharts would help with planning what it should do. It does **_something_** but who knows if it does what it's supposed to. The units of the values it looks up are wrong at the very least.
+
+:::
+
+The equation of state entity is used for calculations related to enthalpy.  
 It stores corresponding pressure/temperature/enthalpy values in memory and has a range of methods to read and select data.
 
 :::info
