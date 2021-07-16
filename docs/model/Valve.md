@@ -25,6 +25,10 @@ export default class Valve extends Point {
     return this.inPressure / this.outPressure + 5;
   }
 
+  get pressure(): number {
+    return this.outPressure;
+  }
+
   get inPressure(): number {
     return super.calcPressure();
   }
@@ -43,7 +47,10 @@ Performs enthalpy calculations using the `input pressure`, `input temperature` a
 
 Returns the calculated temperature.
 
+## get `pressure`
+
+Returns the output pressure.
+
 ## get `inPressure`
 
-Returns the lowest pressure value of any preceding node.  
-This exists because `this.pressure` will be the the output pressure.
+Returns the lowest pressure value of any preceding node.
