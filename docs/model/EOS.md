@@ -4,6 +4,12 @@ sidebar_position: 6
 
 # Equation of State
 
+:::note
+
+This code is not yet part of the `ccs-sim` package.
+
+:::
+
 :::danger poorly implemented (maybe?)
 
 This needs work. Maybe flowcharts would help with planning what it should do. It does **_something_** but who knows if it does what it's supposed to. The units of the values it looks up are wrong at the very least.
