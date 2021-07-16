@@ -6,8 +6,7 @@ sidebar_position: 1
 
 This class provides the functionality for different entities to connect to one another.
 
-They can be recursively stored as child nodes in the parent's `sources` array, which allows for the data to be structured as a [tree](<https://en.wikipedia.org/wiki/Tree_(data_structure)>).  
-This is important because we have to navigate through the network using post-order traversal to ensure that each calculation happens in the correct order.
+They can be recursively stored as child nodes in the parent's `sources` array, an adjacency list which allows for the entities to be structured as a [tree](<https://en.wikipedia.org/wiki/Tree_(data_structure)>). This is important because we have to navigate through the network using [post-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Post-order,_LRN) to ensure that each calculation happens in the correct order.
 
 ```js
 interface ITNode {
