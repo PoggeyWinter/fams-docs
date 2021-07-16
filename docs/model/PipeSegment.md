@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Pipe Segment
 
-Pipe segments extend the [TreeNode](/docs/model/TreeNode) class. It might make more sense for them extend the [Point](/docs/model/Point) class instead but I didn't think about that and made this class first.
+Pipe segments extend the [Point](/docs/model/Point) class.
 
 Their additional properties can be seen below.
 
@@ -117,19 +117,6 @@ Adds a child node to `this.sources`. Re-evaluates the start pressure of this nod
 ```js
 addSource(node: TreeNode) {
   super.addSource(node)
-
-  let lowestPressure = this.properties.start.pressure
-  const selectLowerPressure = (n: PipeSegment) => {
-    if (n !== this) lowestPressure = Math.min(lowestPressure, n.pressure)
-  }
-  postOrder(this, selectLowerPressure)
-
-  this.properties.start.pressure = lowestPressure
+  this.properties.start.pressure = this.calcPressure()
 }
 ```
-
-:::tip Planned change
-
-This should definitely be made to extend `Point` rather than `TreeNode`
-
-:::
