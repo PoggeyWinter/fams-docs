@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Valve
 
-Similarly to the [Point](/docs/model/Point), the Valve object extends the [TreeNode](/docs/model/TreeNode) class. Its purpose is to calculate and return a new temperature value based on the specified output pressure.
+Valves extend the [Point](/docs/model/Point) class. Their purpose is to calculate and return a new temperature value based on the specified output pressure.
 
 The constructor takes one argument, `outPressure`
 
